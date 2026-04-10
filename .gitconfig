@@ -1,0 +1,23 @@
+"""Configuração Git"""
+[core]
+    excludesfile = ~/.gitignore_global
+    autocrlf = input
+
+[user]
+    name = seu-nome
+    email = seu-email@example.com
+
+[pull]
+    rebase = true
+
+[push]
+    default = current
+
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    visual = log --graph --oneline --decorate --all
