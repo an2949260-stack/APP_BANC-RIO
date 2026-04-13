@@ -33,7 +33,7 @@ async def create_account(
         )
 
 
-@router.get("/", response_model=PaginatedResponse)
+@router.get("/", response_model=PaginatedResponse[AccountResponse])
 async def list_accounts(
     skip: int = 0,
     limit: int = 10,

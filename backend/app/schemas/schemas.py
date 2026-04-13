@@ -1,8 +1,10 @@
 """Schemas Pydantic para validação de dados"""
-from pydantic import BaseModel, EmailStr, Field, validator
+from pydantic import BaseModel, EmailStr, Field, field_validator, ConfigDict, computed_field
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Generic, TypeVar, List
 from app.models import AccountType, TransactionType, TransactionStatus
+
+T = TypeVar("T")
 
 
 # ===== USER SCHEMAS =====
@@ -24,7 +26,8 @@ class UserCreate(UserBase):
     password: str = Field(..., min_length=8)
     birth_date: datetime
     
-    @validator("password")
+    @field_validator("password")
+    @classmethod
     def validate_password(cls, v):
         """Valida força da senha"""
         if not any(char.isupper() for char in v):
@@ -56,8 +59,7 @@ class UserResponse(UserBase):
 
     cpf: str = Field(..., max_length=255)
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # ===== AUTHENTICATION SCHEMAS =====
@@ -102,14 +104,13 @@ class AccountResponse(AccountBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class AccountDetailResponse(AccountResponse):
     """Schema detalhado de conta"""
-    available_balance: float
-    
+
+    @computed_field
     @property
     def available_balance(self) -> float:
         """Retorna saldo disponível incluindo limite de saque"""
@@ -145,8 +146,7 @@ class TransactionResponse(TransactionBase):
     created_at: datetime
     processed_at: Optional[datetime] = None
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # ===== AUDIT LOG SCHEMAS =====
@@ -162,8 +162,7 @@ class AuditLogResponse(BaseModel):
     status_code: Optional[int] = None
     created_at: datetime
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # ===== PAGINAÇÃO =====
@@ -173,9 +172,9 @@ class PaginationParams(BaseModel):
     limit: int = Field(10, ge=1, le=100)
 
 
-class PaginatedResponse(BaseModel):
+class PaginatedResponse(BaseModel, Generic[T]):
     """Response com paginação"""
     total: int
     skip: int
     limit: int
-    items: list
+    items: List[T]

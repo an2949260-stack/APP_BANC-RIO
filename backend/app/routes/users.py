@@ -78,7 +78,7 @@ async def deactivate_account(
         )
 
 
-@router.get("/", response_model=PaginatedResponse)
+@router.get("/", response_model=PaginatedResponse[UserResponse])
 async def list_users(
     skip: int = 0,
     limit: int = 10,
