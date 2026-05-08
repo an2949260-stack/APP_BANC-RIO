@@ -1,12 +1,12 @@
-# 🏦 BancoApp - Sistema Bancário Profissional
+# BancoApp - Sistema Bancário Profissional
 
 BancoApp é uma solução bancária completa desenvolvida em **Python**, com **FastAPI** no backend, **Streamlit** no frontend e orquestração via **Docker Compose**.
 
-## 🚀 Visão Geral
+##  Visão Geral
 
 Este projeto implementa um sistema bancário com gerenciamento de usuários, autenticação JWT, contas financeiras, transações, histórico de movimentações, criptografia de dados sensíveis e monitoramento.
 
-## 🧩 Stack Tecnológica
+## Stack Tecnológica
 
 - Backend: **FastAPI**, **SQLAlchemy**, **Pydantic**, **Uvicorn**
 - Banco de dados: **PostgreSQL**
@@ -16,7 +16,7 @@ Este projeto implementa um sistema bancário com gerenciamento de usuários, aut
 - Monitoramento: **Prometheus**, **Grafana**
 - Testes: **pytest**
 
-## ✨ Funcionalidades Principais
+##  Funcionalidades Principais
 
 - Registro e login de usuários
 - Autenticação com Access Token e Refresh Token
@@ -29,7 +29,7 @@ Este projeto implementa um sistema bancário com gerenciamento de usuários, aut
 - Auditoria de operações e logs estruturados
 - Containerização completa com Docker
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```text
 APP_BANCO/
@@ -104,7 +104,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## 🧪 Testes
+## Testes
 
 Execute os testes com:
 
@@ -113,7 +113,7 @@ cd APP_BANCO
 pytest
 ```
 
-## 📌 Endpoints Principais
+## Endpoints Principais
 
 ### Autenticação
 
@@ -143,7 +143,7 @@ pytest
 - `GET /api/transactions/{transaction_id}`
 - `GET /api/transactions/account/{account_id}/history`
 
-## 📦 Deploy
+## Deploy
 
 O deployment é feito por Docker Compose. Use:
 
@@ -157,6 +157,6 @@ Para desligar os serviços:
 docker-compose down
 ```
 
-## 📞 Contato
+## Contato
 
 Para dúvidas ou manutenção do projeto, utilize o canal de contato do proprietário do repositório.
