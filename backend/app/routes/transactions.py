@@ -202,7 +202,7 @@ async def get_transaction(
         )
 
 
-@router.get("/account/{account_id}/history", response_model=PaginatedResponse)
+@router.get("/account/{account_id}/history", response_model=PaginatedResponse[TransactionResponse])
 async def get_account_transactions(
     account_id: str,
     skip: int = 0,
@@ -248,7 +248,7 @@ async def get_account_transactions(
         )
 
 
-@router.get("/user/{user_id}/history", response_model=PaginatedResponse)
+@router.get("/user/{user_id}/history", response_model=PaginatedResponse[TransactionResponse])
 async def get_user_transactions(
     user_id: str,
     skip: int = 0,
