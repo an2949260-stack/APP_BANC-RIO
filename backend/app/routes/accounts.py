@@ -48,17 +48,38 @@ async def list_accounts(
             skip,
             limit
         )
+        accounts_response = [AccountResponse.model_validate(acc) for acc in accounts]
         return {
             "total": total,
             "skip": skip,
             "limit": limit,
-            "items": accounts
+            "items": accounts_response
         }
     except Exception as e:
         logger.error(f"List accounts error: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Erro ao listar contas"
+        )
+
+
+@router.get("/total-balance", response_model=dict)
+async def get_total_balance(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Obtém o saldo total do usuário em todas as contas"""
+    try:
+        total_balance = AccountService.get_total_balance(db, current_user.id)
+        return {
+            "user_id": current_user.id,
+            "total_balance": total_balance
+        }
+    except Exception as e:
+        logger.error(f"Get total balance error: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Erro ao obter saldo total"
         )
 
 
@@ -135,22 +156,3 @@ async def get_account_balance(
             detail="Erro ao obter saldo"
         )
 
-
-@router.get("/total-balance", response_model=dict)
-async def get_total_balance(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    """Obtém o saldo total do usuário em todas as contas"""
-    try:
-        total_balance = AccountService.get_total_balance(db, current_user.id)
-        return {
-            "user_id": current_user.id,
-            "total_balance": total_balance
-        }
-    except Exception as e:
-        logger.error(f"Get total balance error: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Erro ao obter saldo total"
-        )

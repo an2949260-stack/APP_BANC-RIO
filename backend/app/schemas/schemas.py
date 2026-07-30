@@ -1,7 +1,7 @@
 """Schemas Pydantic para validação de dados"""
 from pydantic import BaseModel, EmailStr, Field, validator
 from datetime import datetime
-from typing import Optional
+from typing import Any, Optional
 from app.models import AccountType, TransactionType, TransactionStatus
 
 
@@ -178,4 +178,4 @@ class PaginatedResponse(BaseModel):
     total: int
     skip: int
     limit: int
-    items: list
+    items: list[Any]

@@ -227,11 +227,12 @@ async def get_account_transactions(
             limit
         )
         
+        transactions_response = [TransactionResponse.model_validate(t) for t in transactions]
         return {
             "total": total,
             "skip": skip,
             "limit": limit,
-            "items": transactions
+            "items": transactions_response
         }
     except AccountNotFoundException:
         raise HTTPException(
@@ -272,11 +273,12 @@ async def get_user_transactions(
             limit
         )
         
+        transactions_response = [TransactionResponse.model_validate(t) for t in transactions]
         return {
             "total": total,
             "skip": skip,
             "limit": limit,
-            "items": transactions
+            "items": transactions_response
         }
     except HTTPException:
         raise
